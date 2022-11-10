@@ -1,0 +1,50 @@
+@startuml
+protocol "Auth Protocol"
+class Server {
+-persistent_storage: dict
+-active_sessions: dict
+__
++enroll_tag()
+-generate_random_challenge()
+-challenge_tag()
+-generate_initial_random_session_identity()
+-store_identity()
+-remove_identity()
+..
++handle_message()
+-handle_m2()
+-handle_m4()
+}
+class Tag {
+-puf: ArbiterPUF
+-sid: str
+-enrolled: bool
+__
+#generate_response()
+#set_sid()
+..
++handle_message()
+-handle_m1()
+-handle_m3()
+-handle_m5()
+}
+class AuthSession{
++sid: str
++challenge: BitArray
++response: BitArray
++n: BitArray
++m: BitArray
++auth1: Hash
+...
+}
+class TagFactory{
+-total_produced_tags: int
++manufacture_n_tags()
+}
+
+
+Server ..> "Auth Protocol" : implements
+Tag ..> "Auth Protocol" : implements
+Server "1" *-- "many" AuthSession : contains
+TagFactory "1" o-- "many" Tag : manufactures
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+entity support{
+CHALLENGE_LENGTH: int
+RESPONSE_LENGTH: int
+HASH_FUNCTION: fun
+array_to_bitstring()
+bitstring_to_challenge()
+xor()
+concat()
+new_hash()
+verify_hash()
+generate_random_bistring()
+add_int_to_bitstring()
+compute_next_challenge()
+}
+class AuthMessage
+class MInit
+class M1
+class M2{
+sid: str
+}
+class M3{
+challenge: BitArray
+n_mod: BitArray
+auth1: Hash
+}
+class M4{
+resp_mod: BitArray
+m_mod: BitArray
+auth2: Hash
+}
+class M5{
+auth3: Hash
+}
+
+AuthMessage <|-- MInit : extends
+AuthMessage <|-- M1 : extends
+AuthMessage <|-- M2 : extends
+AuthMessage <|-- M3 : extends
+AuthMessage <|-- M4 : extends
+AuthMessage <|-- M5 : extends
+support --|> AuthMessage : provides
+@enduml
